@@ -1,0 +1,12 @@
+<template name="userTasksList">
+  <div class="row col-md-6">
+    <div class="newTask pull-right">
+      <a href="{{pathFor 'newTask'}}" class="btn btn-primary active" role="button">New Task</a>
+    </div>
+    <div class="tasks">
+      {{#each tasks}}
+        {{> userTaskItem}}
+      {{/each}}
+    </div>
+  </div>
+</template>
