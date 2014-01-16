@@ -1,3 +1,3 @@
 Template.userTasksList.helpers
   tasks: ()->
-    UserTasks.find {}, {sort: {createdAt: -1}}
+    UserTasks.find {assignedTo: Meteor.userId()}, {sort: {createdAt: -1}}

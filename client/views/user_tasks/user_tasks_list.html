@@ -1,12 +1,24 @@
 <template name="userTasksList">
-  <div class="row col-md-6">
-    <div class="newTask pull-right">
-      <a href="{{pathFor 'newTask'}}" class="btn btn-primary active" role="button">New Task</a>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="well">
+        <div class="list-group-item-heading">Tasks Assigned to you</div>
+        <ul class="list-group">
+          {{#each tasks}}
+          <li class="list-group-item">
+            {{> userTaskItem}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
     </div>
-    <div class="tasks">
-      {{#each tasks}}
-        {{> userTaskItem}}
-      {{/each}}
+
+    <div class="col-md-4">
+      <div class="well">
+        <div class="list-group-item-heading">Tasks Assigned By You</div>
+      </div>
     </div>
+
+
   </div>
 </template>

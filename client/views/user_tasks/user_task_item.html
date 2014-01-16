@@ -1,7 +1,6 @@
 <template name="userTaskItem">
-  <div class="row task">
-    <div class="task-content">
-      <h3><a href="{{pathFor 'userTaskPage'}}">{{title}}</a>  By {{postedBy}}</h3>
-    </div>
+  <div class="task-content">
+    <h4 class="list-group-item-heading"><a href="{{pathFor 'userTaskPage'}}">{{title}}</a></h4>
+    <span>By {{createdBy}}</span>
   </div>
 </template>

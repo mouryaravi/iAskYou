@@ -1,0 +1,17 @@
+<template name="userGroups">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="well">
+        <div class="list-group-item-heading">Your Groups</div>
+        <ul class="list-group">
+          {{#each groups}}
+          <li class="list-group-item">
+            {{> userGroupItem}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</template>

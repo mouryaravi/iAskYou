@@ -1,0 +1,27 @@
+<template name="newGroup">
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label class="col-sm-4">Create New Group</label>
+    </div>
+    <div class="form-group">
+      <div class="input-group col-sm-4">
+        <span class="input-group-addon">@</span>
+        <input type="text" name="name" class="form-control" placeholder="Enter Group name Here">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group col-sm-4">
+        <span class="input-group-addon">Description</span>
+        <textarea class="form-control"  name="description" rows="1" placeholder="Enter Description Here"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-1 col-sm-1">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+      <div class="col-sm-1">
+        <a href="{{pathFor 'userTasksList'}}" class="btn btn-primary">Cancel</a>
+      </div>
+    </div>
+  </form>
+</template>

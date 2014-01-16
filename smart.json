@@ -1,6 +1,10 @@
 {
   "packages": {
     "iron-router": {},
-    "spin": {}
+    "spin": {},
+    "collection2": {},
+    "fast-render": {
+      "git": "git://github.com/arunoda/meteor-fast-render.git"
+    }
   }
 }
