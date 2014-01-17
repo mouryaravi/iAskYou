@@ -13,3 +13,9 @@ iron-router
 spin
 accounts-ui
 collection2
+iron-router-progress
+accounts-entry
+iron-router-auth
+moment
+bootstrap3-datetimepicker
+bootstrap-errors

@@ -1,6 +1,10 @@
 <template name="userTaskItem">
   <div class="task-content">
     <h4 class="list-group-item-heading"><a href="{{pathFor 'userTaskPage'}}">{{title}}</a></h4>
-    <span>By {{createdBy}}</span>
+    <p class="list-group-item-text">{{description}}</p>
+    <div class="row">
+      <div class="col-md-8">By <span class="author">{{createdByUser.profile.name}}</span></div>
+      <img class="btn-link finished-task" src="/img/Check.png" width="6%"/>
+    </div>
   </div>
 </template>

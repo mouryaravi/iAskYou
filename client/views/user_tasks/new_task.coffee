@@ -19,3 +19,7 @@ Template.newTask.helpers
 
   groups: ()->
     UserGroups.find({})
+
+
+Template.newTask.rendered = ()->
+  $('.datetimepicker').datetimepicker()

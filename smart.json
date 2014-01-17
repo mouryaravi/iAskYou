@@ -5,6 +5,12 @@
     "collection2": {},
     "fast-render": {
       "git": "git://github.com/arunoda/meteor-fast-render.git"
-    }
+    },
+    "iron-router-progress": {},
+    "accounts-entry": {},
+    "iron-router-auth": {},
+    "moment": {},
+    "bootstrap3-datetimepicker": {},
+    "bootstrap-errors": {}
   }
 }
