@@ -6,11 +6,14 @@ Template.newTask.events
       assignedTo: $(event.target).find('[name=assignedTo]').val(),
       title: $(event.target).find('[name=title]').val(),
       description: $(event.target).find('[name=description]').val()
+      dueBy: $(event.target).find('[name=dueBy]').val()
 
+    task.dueBy = moment(new Date(task.dueBy)).valueOf()
     Meteor.call 'newTask', task, (err, id)->
       if err
-        alert err.reason
-    Router.go 'userTasksList'
+        throw new Errors.throw(err.reason)
+      else
+        Router.go 'userTasksList'
 
 
 Template.newTask.helpers
@@ -22,4 +25,8 @@ Template.newTask.helpers
 
 
 Template.newTask.rendered = ()->
-  $('.datetimepicker').datetimepicker()
+  $('.datepicker').datepicker({
+    format: 'mm/dd/yyyy'
+    autoclose: true
+    todayHighlight: true
+  })

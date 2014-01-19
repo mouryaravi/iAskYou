@@ -14,8 +14,11 @@ Template.userTasksList.helpers
   myFinishedTasksCount: ()->
     UserTasks.find( {$and : [assignedToMeFilter, {status: 'Finished'}]} ).count()
 
-  myTasksSelectedCategory: ()->
-    Session.get('myTasksSelectedCategory') || 'Open'
+  myTasksHeading: ()->
+    cat = Session.get('myTasksSelectedCategory') || 'Open'
+    if cat == 'Open' then 'You still need to finish'
+    else if cat == 'Finished' then 'You finished'
+
 
   tasksCreatedByMe: ()->
     UserTasks.find {$and : [createdByMeFilter, notAssignedToMeFilter, {status: Session.get('othersTasksSelectedCategory')||'Open'} ]}, {sort: {createdAt: -1}}
@@ -25,8 +28,10 @@ Template.userTasksList.helpers
   othersFinishedTasksCount: ()->
     UserTasks.find( {$and : [createdByMeFilter, notAssignedToMeFilter, {status: 'Finished'}]} ).count()
 
-  othersTasksSelectedCategory: ()->
-    Session.get('othersTasksSelectedCategory') || 'Open'
+  othersTasksHeading: ()->
+    cat = Session.get('othersTasksSelectedCategory') || 'Open'
+    if cat == 'Open' then 'You are still waiting for'
+    else if cat == 'Finished' then 'Your peers finished'
 
 
 Template.userTasksList.events

@@ -13,8 +13,8 @@
       "accounts-entry": {},
       "iron-router-auth": {},
       "moment": {},
-      "bootstrap3-datetimepicker": {},
-      "bootstrap-errors": {}
+      "bootstrap-errors": {},
+      "bootstrap-datepicker2": {}
     },
     "packages": {
       "iron-router": {
@@ -57,15 +57,15 @@
         "tag": "v2.2.1",
         "commit": "9ee12e714afe56b189f53076447b7b54f3012065"
       },
-      "bootstrap3-datetimepicker": {
-        "git": "https://github.com/tsega/meteor-bootstrap3-datetimepicker.git",
-        "tag": "v0.0.5",
-        "commit": "30b5fa0759f98b75761772ad891876408f7cc8c4"
-      },
       "bootstrap-errors": {
         "git": "https://github.com/lezed1/meteor-bootstrap-errors.git",
         "tag": "v0.3.1",
         "commit": "f85d792683a423bfb6747460d4516b7404871260"
+      },
+      "bootstrap-datepicker2": {
+        "git": "https://github.com/deepwell/meteor-bootstrap-datepicker.git",
+        "tag": "v1.2.0",
+        "commit": "b7de18a7cc651ea665cda75048663f90d1a11d10"
       },
       "simple-schema": {
         "git": "https://github.com/aldeed/meteor-simple-schema.git",

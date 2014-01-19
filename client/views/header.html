@@ -5,18 +5,23 @@
         <a class="navbar-brand" href="{{pathFor 'userTasksList'}}">You Ask, You Get!</a>
       </div>
       <ul class="nav nav-pills navbar-right">
-        <li>
-          <a href="{{pathFor 'userTasksList'}}">Home</a>
-        </li>
-        <li class="newTask">
-          <a href="{{pathFor 'newTask'}}">New Task</a>
-        </li>
-        <li class="newGroup">
-          <a href="{{pathFor 'newGroup'}}">New Group</a>
-        </li>
-        <li>
-          <a href="{{pathFor 'userGroups'}}">Groups</a>
-        </li>
+        {{#if currentUser}}
+          <li>
+            <a href="{{pathFor 'userTasksList'}}">Home</a>
+          </li>
+          <li class="dropdown">
+            {{> reminders}}
+          </li>
+          <li>
+            <a href="{{pathFor 'userGroups'}}">Groups</a>
+          </li>
+          <li class="newTask">
+            <a href="{{pathFor 'newTask'}}">New Task</a>
+          </li>
+          <li class="newGroup">
+            <a href="{{pathFor 'newGroup'}}">New Group</a>
+          </li>
+        {{/if}}
         {{accountButtons}}
       </ul>
     </div>

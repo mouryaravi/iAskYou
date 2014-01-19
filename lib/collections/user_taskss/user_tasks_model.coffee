@@ -10,6 +10,7 @@
     type: String
     label: 'Task Description'
     max: 2048
+    optional: true
 
   createdBy:
     type: String
@@ -59,3 +60,10 @@
       else if @isInsert then new Date()
     optional: true
   }
+
+
+@Reminders.allow
+  update: ()->
+    true
+  insert: ()->
+    true

@@ -17,5 +17,5 @@ iron-router-progress
 accounts-entry
 iron-router-auth
 moment
-bootstrap3-datetimepicker
 bootstrap-errors
+bootstrap-datepicker2

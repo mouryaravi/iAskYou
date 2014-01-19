@@ -10,7 +10,7 @@
     "accounts-entry": {},
     "iron-router-auth": {},
     "moment": {},
-    "bootstrap3-datetimepicker": {},
-    "bootstrap-errors": {}
+    "bootstrap-errors": {},
+    "bootstrap-datepicker2": {}
   }
 }

@@ -1,0 +1,27 @@
+<template name="reminders">
+    <a data-toggle="dropdown" href="#">
+      Reminders
+      {{#if remindersCount }}
+      <span class="badge badge-inverse">{{remindersCount}}</span>
+      {{/if}}
+      <b class="caret"></b>
+    </a>
+
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      {{#if remindersCount }}
+        {{#each reminders}}
+          {{> reminder }}
+        {{/each}}
+      {{/if}}
+    </ul>
+
+</template>
+
+
+<template name="reminder">
+  <li>
+    <a href="{{reminderTaskPath}}">
+     <strong>{{remindedByUser}}</strong> reminded you about '<strong>{{taskTitle}}</strong>'
+    </a>
+  </li>
+</template>

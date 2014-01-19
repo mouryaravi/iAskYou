@@ -1,14 +1,24 @@
 <template name="userTasksList">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
       <div class="well">
-        <div class="header">
-          <ul class="nav nav-pills pull-right">
-            <li><button class="btn btn-link myActiveTasks">Open({{myActiveTasksCount}})</button></li>
-            <li><button class="btn btn-link myFinishedTasks">Finished({{myFinishedTasksCount}})</button></li>
+        <div class="navbar" role="navigation">
+          <ul class="nav nav-pills navbar-left">
+            <li>
+              <button class="btn btn-link myActiveTasks">Open({{myActiveTasksCount}})</button>
+            </li>
+            <li>
+              <button class="btn btn-link myFinishedTasks">Finished({{myFinishedTasksCount}})</button>
+            </li>
+            <li>
+              <button class="btn btn-link myActiveTasks">Today({{myActiveTasksCount}})</button>
+            </li>
+            <li>
+              <button class="btn btn-link myActiveTasks">This Week({{myActiveTasksCount}})</button>
+            </li>
           </ul>
         </div>
-        <h5 class="list-group-item-heading">{{myTasksSelectedCategory}} Tasks Assigned to you</h5>
+        <h4 class="list-group-item-heading">{{myTasksHeading}}</h4>
         <ul class="list-group">
           {{#each tasksAssignedToMe}}
           <li class="list-group-item">
@@ -21,13 +31,15 @@
 
     <div class="col-md-4">
       <div class="well">
-        <div class="header">
-          <ul class="nav nav-pills pull-right">
-            <li><button class="btn btn-link othersActiveTasks">Open({{othersActiveTasksCount}})</button></li>
-            <li><button class="btn btn-link othersFinishedTasks">Finished({{othersFinishedTasksCount}})</button></li>
-          </ul>
+        <div class="row">
+          <div class="col-md-3">
+            <button class="btn btn-link othersActiveTasks">Open({{othersActiveTasksCount}})</button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-link othersFinishedTasks">Finished({{othersFinishedTasksCount}})</button>
+          </div>
         </div>
-        <h5 class="list-group-item-heading">{{othersTasksSelectedCategory}} Tasks Assigned By You</h5>
+        <h4 class="list-group-item-heading">{{othersTasksHeading}}</h4>
         <ul class="list-group">
           {{#each tasksCreatedByMe}}
           <li class="list-group-item">
@@ -38,9 +50,9 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="well">
-        <div class="list-group-item-heading">Reminders</div>
+        <div class="list-group-item-heading">Notifications</div>
         <ul class="list-group">
         </ul>
       </div>
