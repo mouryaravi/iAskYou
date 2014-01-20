@@ -2,22 +2,21 @@
   <div class="row">
     <div class="col-md-5">
       <div class="well">
-        <div class="navbar" role="navigation">
-          <ul class="nav nav-pills navbar-left">
-            <li>
-              <button class="btn btn-link myActiveTasks">Open({{myActiveTasksCount}})</button>
-            </li>
-            <li>
-              <button class="btn btn-link myFinishedTasks">Finished({{myFinishedTasksCount}})</button>
-            </li>
-            <li>
-              <button class="btn btn-link myActiveTasks">Today({{myActiveTasksCount}})</button>
-            </li>
-            <li>
-              <button class="btn btn-link myActiveTasks">This Week({{myActiveTasksCount}})</button>
-            </li>
-          </ul>
-        </div>
+        <ul class="list-inline">
+          <li>
+            <a href="#" class="myActiveTasks">Open({{myActiveTasksCount}})</a>
+          </li>
+          <li>
+            <a href="#"  class="myFinishedTasks">Finished({{myFinishedTasksCount}})</a>
+          </li>
+          <li>
+            <a href="#"  class="tasksDueToday">Today({{myActiveTasksCount}})</a>
+          </li>
+          <li>
+            <a href="#"  class="tasksDueThisWeek ">This Week({{myActiveTasksCount}})</a>
+          </li>
+        </ul>
+        <hr />
         <h4 class="list-group-item-heading">{{myTasksHeading}}</h4>
         <ul class="list-group">
           {{#each tasksAssignedToMe}}
