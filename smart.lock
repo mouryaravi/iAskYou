@@ -35,7 +35,7 @@
       "fast-render": {
         "git": "git://github.com/arunoda/meteor-fast-render.git",
         "branch": "master",
-        "commit": "7514e0e8f6f387f7ba510eb633568831a066b481"
+        "commit": "b190f1592401f4084ce54b8f713b134e35a4e0db"
       },
       "iron-router-progress": {
         "git": "https://github.com/Multiply/iron-router-progress.git",
@@ -69,8 +69,8 @@
       },
       "simple-schema": {
         "git": "https://github.com/aldeed/meteor-simple-schema.git",
-        "tag": "v0.2.29",
-        "commit": "dc40caf4eaaeb456e1a4e7e227ad326bcd5607b5"
+        "tag": "v0.2.30",
+        "commit": "40f983129da6e82b3ab2fa1f9e73111d818ee71e"
       }
     }
   }

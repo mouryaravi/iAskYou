@@ -1,10 +1,19 @@
 assignedToMeFilter = assignedTo: Meteor.userId()
 createdByMeFilter = createdBy: Meteor.userId()
 notAssignedToMeFilter = {assignedTo: {$nin: [Meteor.userId()]}}
+todayDate = moment(moment().format('YYYY-MM-DD')).valueOf()
+tomorrowDate = moment(moment().add('days', 1).format('YYYY-MM-DD')).valueOf()
+dueTodayFilter =  {dueBy: {'$gte': todayDate, '$lt': tomorrowDate}}
 
 Template.userTasksList.helpers
   tasksAssignedToMe: ()->
-    filter = {$and : [assignedToMeFilter, {status: Session.get('myTasksSelectedCategory')||'Open'}]}
+    status = Session.get('myTasksSelectedCategory')||'Open'
+    dateFilter = {}
+    if (status == 'DueToday')
+      status = 'Open'
+      dateFilter = dueTodayFilter
+
+    filter = {$and : [assignedToMeFilter, {status: status}, dateFilter]}
     sortFilter = {sort: {createdAt: -1}}
     UserTasks.find filter, sortFilter
 
@@ -14,10 +23,15 @@ Template.userTasksList.helpers
   myFinishedTasksCount: ()->
     UserTasks.find( {$and : [assignedToMeFilter, {status: 'Finished'}]} ).count()
 
+  myActiveTodaysTasksCount: ()->
+    UserTasks.find( {$and : [assignedToMeFilter, {status: 'Open'}, dueTodayFilter]} ).count()
+
+
   myTasksHeading: ()->
     cat = Session.get('myTasksSelectedCategory') || 'Open'
-    if cat == 'Open' then 'You still need to finish'
-    else if cat == 'Finished' then 'You finished'
+    if cat == 'Open' then 'Due Tasks'
+    else if cat == 'Finished' then 'Finished Tasks'
+    else if cat == 'DueToday' then 'Tasks Due Today'
 
 
   tasksCreatedByMe: ()->
@@ -27,6 +41,8 @@ Template.userTasksList.helpers
     UserTasks.find( {$and : [createdByMeFilter, notAssignedToMeFilter, {status: 'Open'}]} ).count()
   othersFinishedTasksCount: ()->
     UserTasks.find( {$and : [createdByMeFilter, notAssignedToMeFilter, {status: 'Finished'}]} ).count()
+  othersActiveTodaysTasksCount: ()->
+    UserTasks.find( {$and : [createdByMeFilter, notAssignedToMeFilter, {status: 'Open'}, dueTodayFilter]} ).count()
 
   othersTasksHeading: ()->
     cat = Session.get('othersTasksSelectedCategory') || 'Open'
@@ -42,6 +58,10 @@ Template.userTasksList.events
   'click .myFinishedTasks': (event)->
     event.preventDefault()
     Session.set('myTasksSelectedCategory', 'Finished')
+
+  'click .tasksDueToday': (event)->
+    event.preventDefault()
+    Session.set('myTasksSelectedCategory', 'DueToday')
 
   'click .othersActiveTasks': (event)->
     event.preventDefault()

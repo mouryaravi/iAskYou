@@ -31,7 +31,7 @@
     optional: true
 
   dueBy:
-    type: Date
+    type: Number
     label: 'Due by'
     optional: true
 

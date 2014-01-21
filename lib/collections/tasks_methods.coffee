@@ -13,7 +13,7 @@ Meteor.methods
 
     task = _.extend _.pick(newTaskParams, 'title', 'description', 'assignedTo'),
       createdBy: Meteor.userId()
-      dueBy: moment(newTaskParams.dueBy).toDate()
+      dueBy: moment(newTaskParams.dueBy).valueOf()
 
     task.assignedTo = task.assignedTo.replace /.*:/, ''
     if isUser

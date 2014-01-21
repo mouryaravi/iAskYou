@@ -10,10 +10,7 @@
             <a href="#"  class="myFinishedTasks">Finished({{myFinishedTasksCount}})</a>
           </li>
           <li>
-            <a href="#"  class="tasksDueToday">Today({{myActiveTasksCount}})</a>
-          </li>
-          <li>
-            <a href="#"  class="tasksDueThisWeek ">This Week({{myActiveTasksCount}})</a>
+            <a href="#"  class="tasksDueToday">Due Today({{myActiveTodaysTasksCount}})</a>
           </li>
         </ul>
         <hr />
@@ -30,14 +27,18 @@
 
     <div class="col-md-4">
       <div class="well">
-        <div class="row">
-          <div class="col-md-3">
-            <button class="btn btn-link othersActiveTasks">Open({{othersActiveTasksCount}})</button>
-          </div>
-          <div class="col-md-3">
-            <button class="btn btn-link othersFinishedTasks">Finished({{othersFinishedTasksCount}})</button>
-          </div>
-        </div>
+        <ul class="list-inline">
+          <li>
+            <a href="#" class="othersActiveTasks">Open({{othersActiveTasksCount}})</a>
+          </li>
+          <li>
+            <a href="#"  class="othersFinishedTasks">Finished({{othersFinishedTasksCount}})</a>
+          </li>
+          <li>
+            <a href="#"  class="othersTasksDueToday">Due Today({{othersActiveTodaysTasksCount}})</a>
+          </li>
+        </ul>
+        <hr />
         <h4 class="list-group-item-heading">{{othersTasksHeading}}</h4>
         <ul class="list-group">
           {{#each tasksCreatedByMe}}
