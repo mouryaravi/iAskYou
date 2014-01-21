@@ -1,0 +1,48 @@
+<template name="userTaskEdit">
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label class="col-sm-4">Edit Task</label>
+    </div>
+    <div class="form-group">
+      <div class="input-group col-sm-4">
+        <span class="input-group-addon">@</span>
+        <select name="assignedTo" id="assignedTo" class="form-control">
+          {{#each connections}}
+            <option id="assignedTo" value="user:{{_id}}">{{profile.name}}</option>
+          {{/each}}
+          {{#each groups}}
+            <option id="assignedTo" value="group:{{_id}}">{{name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group col-sm-4">
+        <span class="input-group-addon">Title</span>
+        <input type="text" name="title" class="form-control" value="{{title}}">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group col-sm-4">
+        <span class="input-group-addon">Description</span>
+        <textarea class="form-control"  name="description" rows="2">{{description}}</textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group col-sm-4">
+        <span class="input-group-addon">Due By</span>
+        <input name="dueBy" class="datepicker" data-date-format="mm/dd/yyyy" value="{{dueByDate}}">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-offset-1 col-sm-1">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+        <div class="col-sm-1">
+          <a href="{{pathFor 'userTasksList'}}" class="btn btn-primary">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</template>

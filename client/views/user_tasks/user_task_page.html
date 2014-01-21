@@ -1,4 +1,17 @@
 <template name="userTaskPage">
-  {{>userTaskItem}}
-      <a href="{{pathFor 'userTasksList'}}" class="btn btn-primary active" role="button">Back</a>
+
+  </form>
+    <div class="task-content">
+    <h3 class="list-group-item-heading">{{title}}</h3>
+    <p class="list-group-item-text">{{description}}</p>
+    <p>Submitted By <span class="author">{{createdByUser.profile.name}}</span></p>
+    <p>Due <span class="date">{{dueByText}}</span></p>
+    <p>Assigned To <span class="author">{{assignedToUser.profile.name}}</span></p>
+  </div>
+  <div class="row">
+    <a href="{{pathFor 'userTasksList'}}" class="col-md-offset-1 btn btn-primary active" role="button">Back</a>
+    {{#if taskCreatedByMe}}
+      <a href="{{pathFor 'userTaskEdit'}}" class=" btn btn-primary active" role="button">Edit</a>
+    {{/if}}
+  </div>
 </template>

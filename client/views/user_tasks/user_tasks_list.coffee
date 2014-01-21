@@ -8,13 +8,14 @@ dueTodayFilter =  {dueBy: {'$gte': todayDate, '$lt': tomorrowDate}}
 Template.userTasksList.helpers
   tasksAssignedToMe: ()->
     status = Session.get('myTasksSelectedCategory')||'Open'
-    dateFilter = {}
-    if (status == 'DueToday')
+    allFilters = [assignedToMeFilter]
+    if status == 'DueToday'
       status = 'Open'
-      dateFilter = dueTodayFilter
+      allFilters.push dueTodayFilter
 
-    filter = {$and : [assignedToMeFilter, {status: status}, dateFilter]}
-    sortFilter = {sort: {createdAt: -1}}
+    allFilters.push status: status
+    filter = {$and : allFilters}
+    sortFilter = {sort: {dueBy: 1}}
     UserTasks.find filter, sortFilter
 
 

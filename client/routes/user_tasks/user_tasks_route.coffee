@@ -23,3 +23,9 @@ Router.map () ->
       UserTasks.findOne this.params._id
     loginRequired: 'entrySignIn'
 
+  @route 'userTaskEdit',
+    path: '/task/:_id/edit'
+    data: ()->
+      UserTasks.findOne this.params._id
+    loginRequired: 'entrySignIn'
+
