@@ -1,0 +1,62 @@
+<template name="newTaskList">
+  <div class="newTaskList">
+    <div>
+      <h4>Create New Task List</h4>
+    </div>
+    <div class="list-group-item">
+      <div class="form-group">
+        <div class="row">
+          <label class="col-lg-1">Title</label>
+          <input type="text" class="col-md-5 input-lg" name="taskListTitle"
+                 placeholder="Enter tasklist title here"/>
+        </div>
+      </div>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <form role="form">
+          <div class="row">
+            <div class="form-group">
+              <div class="input-group col-sm-4">
+                <span class="input-group-addon">@</span>
+                <select name="assignedTo" id="assignedTo" class="form-control">
+                  {{#each connections}}
+                  <option id="assignedTo" value="user:{{_id}}">{{profile.name}}</option>
+                  {{/each}}
+                  {{#each groups}}
+                  <option id="assignedTo" value="group:{{_id}}">{{name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group col-sm-4">
+                <span class="input-group-addon">Title</span>
+                <input type="text" name="title" class="form-control" placeholder="Enter Title Here">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <div class="input-group col-sm-4">
+                <span class="input-group-addon">Description</span>
+                <textarea class="form-control"  name="description" rows="2" placeholder="Enter Description Here"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group col-sm-4">
+                <span class="input-group-addon">Due By</span>
+                <input name="dueBy" class="datepicker" data-date-format="mm/dd/yyyy">
+              </div>
+            </div>
+          </div>
+        </form>
+      </li>
+    </ul>
+    <div class="row">
+      <button class="addNewTaskForm col-md-offset-2 btn btn-primary">Add More</button>
+      <button class="submitTasks btn btn-primary">Create TaskList</button>
+      <a href="{{pathFor 'taskLists'}}" class="cancel btn btn-primary">Cancel</a>
+    </div>
+  </div>
+</template>

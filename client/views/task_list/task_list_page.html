@@ -1,0 +1,12 @@
+<template name="taskListPage">
+  <div class="taskList-content">
+    <h4 class="list-group-item-heading">{{title}}</h4>
+    {{#each tasks}}
+      {{> userCreatedTaskItem}}
+    {{/each}}
+  </div>
+  <div class="row">
+    <a href="{{pathFor 'taskLists'}}" class="btn btn-primary">Back</a>
+  </div>
+
+</template>

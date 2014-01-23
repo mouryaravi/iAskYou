@@ -6,4 +6,5 @@ Router.configure
       Meteor.subscribe 'userTasks'
       Meteor.subscribe 'users'
       Meteor.subscribe 'reminders'
+      Meteor.subscribe 'taskLists'
     ]

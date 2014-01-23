@@ -1,5 +1,6 @@
 Meteor.methods
   newTask: (newTaskParams)->
+    console.log 'Got new task params...', newTaskParams
     user = Meteor.user()
     unless user
       throw new Meteor.Error 401, 'Please login before creating task'
@@ -11,7 +12,7 @@ Meteor.methods
     isUser = /user:/.test newTaskParams.assignedTo
     isGroup = /group:/.test newTaskParams.assignedTo
 
-    task = _.extend _.pick(newTaskParams, 'title', 'description', 'assignedTo'),
+    task = _.extend _.pick(newTaskParams, 'title', 'description', 'assignedTo', 'taskList'),
       createdBy: Meteor.userId()
       dueBy: moment(newTaskParams.dueBy).valueOf()
 

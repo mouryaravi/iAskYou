@@ -1,0 +1,29 @@
+<template name="taskLists">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="well">
+        <ul class="list-inline">
+          <li class="newTaskList">
+            <a href="{{pathFor 'newTaskList'}}">New Task List</a>
+          </li>
+        </ul>
+        <hr />
+        <div class="list-group-item-heading"><h5>Your Task Lists</h5></div>
+        <ul class="list-group">
+          {{#each taskLists}}
+            <li class="list-group-item">
+              {{> taskListItem}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="taskListItem">
+  <div class="row">
+    <a class="col-sm-10" href="{{pathFor 'taskListPage'}}">{{title}}</a>
+    <a class="btn btn-xs btn-primary col-sm-2" href="">Clone</a>
+  </div>
+</template>

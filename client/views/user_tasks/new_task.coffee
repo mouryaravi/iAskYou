@@ -8,7 +8,8 @@ Template.newTask.events
       description: $(event.target).find('[name=description]').val()
       dueBy: $(event.target).find('[name=dueBy]').val()
 
-    task.dueBy = moment(moment(task.dueBy).format('YYYY-MM-DD')).add('hours', 23).add('minutes', 59).valueOf()
+    if task.dueBy
+      task.dueBy = moment(moment(task.dueBy).format('YYYY-MM-DD')).add('hours', 23).add('minutes', 59).valueOf()
     Meteor.call 'newTask', task, (err, id)->
       if err
         throw new Errors.throw(err.reason)

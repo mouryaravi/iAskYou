@@ -43,6 +43,12 @@
       if @isInsert then 'Open'
       else if @isUpsert then {$setOnInsert: 'Open'}
 
+  taskList:
+    type: String
+    label: 'TaskList this task belongs to (if any)'
+    max: 200
+    optional: true
+
   createdAt:
     type: Date
     label: 'Created Time'
