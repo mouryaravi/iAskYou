@@ -5,15 +5,11 @@ Router.map ()->
 
   @route 'userGroups',
     path: '/groups'
-    waitOn: ()->
-      Meteor.subscribe 'userGroups'
     loginRequired: 'entrySignIn'
 
   @route 'userGroupPage',
     path: '/group/:_id'
     data: ()->
-      UserGroups.findOne this.params._id
-    waitOn: ()->
-      Meteor.subscribe 'userTasks'
+      UserGroups.findOne @params._id
     loginRequired: 'entrySignIn'
 

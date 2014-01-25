@@ -4,6 +4,7 @@ Router.configure
   waitOn: ()->
     [
       Meteor.subscribe 'userTasks'
+      Meteor.subscribe 'userGroups'
       Meteor.subscribe 'users'
       Meteor.subscribe 'reminders'
       Meteor.subscribe 'taskLists'

@@ -1,23 +1,35 @@
 @UserGroups = new Meteor.Collection 'userGroups',
   schema: new SimpleSchema {
 
-    name:
+    title:
       type: String
-      label: 'Name of Group'
+      label: 'Title of Group'
       max: 200
 
     description:
       type: String
       label: 'Description'
       max: 1024
+      optional: true
 
-    owner:
+    type:
+      type: String
+      label: 'Group Type'
+      max: 20
+
+
+    createdBy:
       type: String
       label: 'Group Owner'
       denyUpdate: true
       autoValue: ()->
         if @isInsert then Meteor.userId()
         else if @isUpsert then {$setOnInsert: Meteor.userId()}
+
+    members:
+      type: [String]
+      label: 'Group Members'
+      optional: true
 
     createdAt:
       type: Date
@@ -28,7 +40,7 @@
         else if @isUpsert then {$setOnInsert: new Date()}
         else this.unset()
 
-    updatedAt:
+    lastUpdatedAt:
       type: Date
       label: 'Last Updated Time'
       autoValue: ()->
@@ -43,9 +55,11 @@ Meteor.methods
     user = Meteor.user()
     unless user
       throw new Meteor.Error 401, 'Please login before creating a group'
-    unless newGroupParams.name
-      throw new Meteor.Error 422, 'Please fill in group name'
+    unless newGroupParams.title
+      throw new Meteor.Error 422, 'Please fill in group title'
 
-    group = _.extend _.pick(newGroupParams, 'name', 'description')
+    group = _.extend _.pick(newGroupParams, 'title', 'description', 'members', 'type'),
+      createdBy: user._id
 
+    console.log 'creating group', group
     groupId = UserGroups.insert group

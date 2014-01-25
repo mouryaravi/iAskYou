@@ -11,6 +11,7 @@
     "iron-router-auth": {},
     "moment": {},
     "bootstrap-errors": {},
-    "bootstrap-datepicker2": {}
+    "bootstrap-datepicker2": {},
+    "bootstrap-3": {}
   }
 }

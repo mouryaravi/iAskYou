@@ -70,7 +70,7 @@
       else if @isUpsert then {$setOnInsert: new Date()}
       else this.unset()
 
-  updatedAt:
+  lastUpdatedAt:
     type: Date
     label: 'Last Updated Time'
     autoValue: ()->

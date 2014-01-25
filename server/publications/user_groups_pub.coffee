@@ -1,2 +1,8 @@
 Meteor.publish 'userGroups', ()->
-  UserGroups.find({owner: this.userId})
+  UserGroups.find
+    $or:
+      [
+        {createdBy: @userId}
+        {members: @userId}
+        {type: 'public'}
+      ]
