@@ -21,6 +21,26 @@ assignedToMeFilterWithStatus = (status)->
   filter.status = status
   filter
 
+assignedToMeFinishedFilter = ()->
+  $or: [
+    {$and: [{assignedToUser: {$exists: true}}, {status: 'Finished'}]}
+    {$and: [{assignedToGroup: {$exists: true}}, {finishedGroupMembers: Meteor.userId()}]}
+  ]
+
+tasksAssignedToMeFilter = (status)->
+  status = status ||  Session.get('myTasksSelectedCategory') || 'Open'
+  allFilters = assignedToMeFilter()
+  allFilters.status = status
+
+  if status == 'DueToday'
+    allFilters.status = 'Open'
+    allFilters.dueBy = dueTodayFilter.dueBy
+  else if status == 'Finished'
+    delete allFilters.status
+    allFilters = assignedToMeFinishedFilter()
+
+  allFilters
+
 createdByMeFilter = createdBy: Meteor.userId()
 notAssignedToMeFilter = {assignedToUser: {$nin: [Meteor.userId()]}}
 todayDate = moment(moment().format('YYYY-MM-DD')).valueOf()
@@ -28,30 +48,18 @@ tomorrowDate = moment(moment().add('days', 1).format('YYYY-MM-DD')).valueOf()
 dueTodayFilter =  {dueBy: {'$gte': todayDate, '$lt': tomorrowDate}}
 
 Template.userTasksList.helpers
+
   tasksAssignedToMe: ()->
-    status = Session.get('myTasksSelectedCategory')||'Open'
-    allFilters = assignedToMeFilter()
-    if status == 'DueToday'
-      status = 'Open'
-      allFilters.dueBy = dueTodayFilter.dueBy
-    else if status == 'Finished'
-      allFilters.finishedGroupMembers = Meteor.userId()
-
-    allFilters.status = status
     sortFilter = {sort: {dueBy: 1}}
-    console.log 'filter, ', allFilters
-
-    UserTasks.find allFilters, sortFilter
-
+    UserTasks.find tasksAssignedToMeFilter(), sortFilter
 
   myActiveTasksCount: ()->
-    UserTasks.find(assignedToMeFilterWithStatus('Open')).count()
+    UserTasks.find(tasksAssignedToMeFilter('Open')).count()
   myFinishedTasksCount: ()->
-    UserTasks.find( assignedToMeFilterWithStatus('Finished') ).count()
+    UserTasks.find(tasksAssignedToMeFilter('Finished') ).count()
 
   myActiveTodaysTasksCount: ()->
-    UserTasks.find( {$and : [assignedToMeFilterWithStatus('Open'), dueTodayFilter]} ).count()
-
+    UserTasks.find( {$and : [tasksAssignedToMeFilter('Open'), dueTodayFilter]} ).count()
 
   myTasksHeading: ()->
     cat = Session.get('myTasksSelectedCategory') || 'Open'

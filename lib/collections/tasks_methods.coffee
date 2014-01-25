@@ -38,6 +38,7 @@ Meteor.methods
     unless task
       throw new Meteor.Error 401, 'Task not found'
 
+    grp = null
     if task.assignedToGroup
       grp = UserGroups.findOne task.assignedToGroup, {fields: {members: 1, title: 1}}
 
@@ -45,7 +46,7 @@ Meteor.methods
 
       unless _.contains grp.members, user._id
         throw new Meteor.Error 403, "You are not member of group: " + grp.title
-    else if task.assignedToUser == user._id
+    else unless task.assignedToUser == user._id
       throw new Meteor.Error 403, "Can not finish other's tasks"
 
     console.log 'finishing task', task.title, ", by ", user._id
@@ -54,6 +55,12 @@ Meteor.methods
       UserTasks.update {_id: finishTaskParams._id}, {$push: {finishedGroupMembers: user._id}}
     else
       UserTasks.update {_id: finishTaskParams._id}, {$set: {status: 'Finished', finishedBy: user._id}}
+
+    if task.assignedToGroup
+      task = UserTasks.findOne task._id
+      if task.finishedGroupMembers.length >= grp.members.length
+        UserTasks.update {_id: finishTaskParams._id}, {$set: {status: 'Finished'}}
+
 
 
   editUserTask: (editTaskParams)->
