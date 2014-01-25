@@ -18,3 +18,6 @@ Template.userTaskPage.helpers
 
   taskCreatedByMe: ()->
     @createdBy == Meteor.userId()
+
+  referencedInTaskList: ()->
+    TaskLists.findOne @taskList, {fields: {title: 1}}

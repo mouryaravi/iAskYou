@@ -1,7 +1,7 @@
 <template name="userTaskPage">
   <form class="form-horizontal" role="form">
     <div class="form-group">
-      <h4 class="list-group-item-heading">{{title}}</h4>
+      <h4 class="list-group-item-heading">Task: <a href="#">{{title}}</a></h4>
     </div>
 
     <div class="form-group">
@@ -28,10 +28,21 @@
         {{#if assignedToUser}}
         <p class="form-control-static" id="assignedTo">{{assignedToUser.profile.name}}</p>
         {{else}}
-        <p class="form-control-static" id="assignedTo">Group: {{assignedToGroup.title}}</p>
+        <p class="form-control-static"
+           id="assignedTo"><a href="{{pathFor 'userGroupPage' assignedToGroup}}">Group: {{assignedToGroup.title}}</p>
         {{/if}}
       </div>
     </div>
+    {{#if taskList}}
+      <div class="form-group">
+        <label for="taskList" class="col-sm-2 control-label">Belongs to Task List</label>
+        <div class="col-sm-10">
+          <p class="form-control-static" id="taskList">
+            <a href="{{pathFor 'taskListPage' referencedInTaskList}}">{{referencedInTaskList.title}}</a>
+          </p>
+        </div>
+      </div>
+    {{/if}}
   </form>
   <div class="row">
     <a href="{{pathFor 'userTasksList'}}" class="col-md-offset-1 btn btn-primary active" role="button">Back</a>

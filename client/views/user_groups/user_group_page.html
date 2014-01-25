@@ -1,8 +1,30 @@
 <template name="userGroupPage">
-  <div>
-    {{>userGroupItem}}
-  </div>
-  <div>
-    <a href="{{pathFor 'userGroups'}}" class="btn btn-primary active" role="button">Back</a>
+  <h4 class="list-group-item-heading">Group: <strong>{{title}}</strong></h4>
+  <div class="col-md-7">
+    <div class="well">
+      <ul class="list-inline">
+        <li>
+          <a href="#" class="openTasks">Open({{openTasksCount}})</a>
+        </li>
+        <li>
+          <a href="#"  class="finishedTasks">Finished({{finishedTasksCount}})</a>
+        </li>
+        <li>
+          <a href="#"  class="openTasksDueToday">Due Today({{openTasksDueToday}})</a>
+        </li>
+      </ul>
+      <hr />
+      <h4 class="list-group-item-heading">{{tasksHeading}}</h4>
+      <ul class="list-group">
+        {{#each groupTasks}}
+        <li class="list-group-item">
+          {{> userCreatedTaskItem}}
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+    <div>
+      <a href="{{pathFor 'userGroups'}}" class="btn btn-primary active" role="button">Back</a>
+    </div>
   </div>
 </template>

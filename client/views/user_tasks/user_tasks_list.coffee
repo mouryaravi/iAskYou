@@ -15,6 +15,7 @@ assignedToMeFilter = ()->
     {assignedToGroup: {$in: myGroupIds()}}
   ]
 
+
 assignedToMeFilterWithStatus = (status)->
   filter = assignedToMeFilter()
   filter.status = status
@@ -33,9 +34,13 @@ Template.userTasksList.helpers
     if status == 'DueToday'
       status = 'Open'
       allFilters.dueBy = dueTodayFilter.dueBy
+    else if status == 'Finished'
+      allFilters.finishedGroupMembers = Meteor.userId()
 
     allFilters.status = status
     sortFilter = {sort: {dueBy: 1}}
+    console.log 'filter, ', allFilters
+
     UserTasks.find allFilters, sortFilter
 
 

@@ -3,19 +3,19 @@ tomorrowDate = moment(moment().add('days', 1).format('YYYY-MM-DD')).valueOf()
 
 dueTodayFilter =  {dueBy: {'$gte': todayDate, '$lt': tomorrowDate}}
 
-Template.taskListPage.helpers
+Template.userGroupPage.helpers
 
-  tasks: ()->
-    taskListId = @_id
+  groupTasks: ()->
+    groupId = @_id
     UserTasks.find({
-      'taskList': taskListId
+      'assignedToGroup': groupId
       'createdBy': Meteor.userId()
     })
 
-
   openTasksCount: ()->
-    UserTasks.find({taskList: @_id, status: 'Open'}).count()
+    UserTasks.find({assignedToGroup: @_id, status: 'Open'}).count()
   finishedTasksCount: ()->
-    UserTasks.find({taskList: @_id, status: 'Finished'}).count()
+    UserTasks.find({assignedToGroup: @_id, status: 'Finished'}).count()
   openTasksDueToday: ()->
-    UserTasks.find(taskList: @_id, status: 'Finished', dueTodayFilter).count()
+    UserTasks.find(assignedToGroup: @_id, status: 'Finished', dueTodayFilter).count()
+
