@@ -20,10 +20,22 @@
       if @isInsert then this.userId
       else if @isUpsert then {$setOnInsert: this.userId}
 
-  assignedTo:
+  assignedToUser:
     type: String
-    label: 'Assignee'
+    label: 'Assignee User'
     max: 200
+    optional: true
+
+  assignedToGroup:
+    type: String
+    label: 'Assignee Group'
+    max: 200
+    optional: true
+
+  finishedGroupMembers:
+    type: [String]
+    label: 'List of members that finished this task'
+    optional: true
 
   finishedBy:
     type: String

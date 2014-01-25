@@ -1,2 +1,2 @@
 Meteor.publish 'userTasks', ()->
-  UserTasks.find({$or: [{assignedTo: this.userId}, {createdBy: this.userId}]})
+  UserTasks.find({$or: [{assignedToUser: this.userId}, {createdBy: this.userId}]})

@@ -1,6 +1,16 @@
+populateAssignee = (params, task)->
+  assignee =  params.assignedTo.replace /.*:/, ''
+  isUser = /user:/.test params.assignedTo
+  isGroup = /group:/.test params.assignedTo
+
+  if isUser
+    task.assignedToUser = assignee
+  else
+    task.assignedToGroup = assignee
+
+
 Meteor.methods
   newTask: (newTaskParams)->
-    console.log 'Got new task params...', newTaskParams
     user = Meteor.user()
     unless user
       throw new Meteor.Error 401, 'Please login before creating task'
@@ -9,34 +19,34 @@ Meteor.methods
     unless newTaskParams.assignedTo
       throw new Meteor.Error 422, 'Please fill in assignee'
 
-    isUser = /user:/.test newTaskParams.assignedTo
-    isGroup = /group:/.test newTaskParams.assignedTo
-
     task = _.extend _.pick(newTaskParams, 'title', 'description', 'assignedTo', 'taskList'),
       createdBy: Meteor.userId()
       dueBy: moment(newTaskParams.dueBy).valueOf()
 
-    task.assignedTo = task.assignedTo.replace /.*:/, ''
-    if isUser
-      taskId = UserTasks.insert task
-    else
-      taskId = GroupTasks.insert task
+    populateAssignee newTaskParams, task
+
+    console.log 'Got new task params...', task
+    UserTasks.insert task
 
 
   finishTask: (finishTaskParams)->
-    console.log 'finishing task', finishTaskParams
     user = Meteor.user()
     unless user
       throw new Meteor.Error 401, 'Please login before creating task'
 
-    task = UserTasks.find finishTaskParams._id
+    task = UserTasks.findOne finishTaskParams._id
     unless task
       throw new Meteor.Error 401, 'Task not found'
 
-    if task.assignedTo in [user._id]
+    unless task.assignedToUser == user._id
       throw new Meteor.Error 403, "Can not finish other's tasks"
 
-    UserTasks.update {_id: finishTaskParams._id}, {$set: {status: 'Finished', finishedBy: user._id}}
+    console.log 'finishing task', task.title, ", by ", user._id
+
+    if task.assignedToGroup
+      UserTasks.update {_id: finishTaskParams._id}, {$push: {finishedGroupMembers: user._id}}
+    else
+      UserTasks.update {_id: finishTaskParams._id}, {$set: {status: 'Finished', finishedBy: user._id}}
 
 
   editUserTask: (editTaskParams)->
@@ -52,16 +62,10 @@ Meteor.methods
     unless editTaskParams.assignedTo
       throw new Meteor.Error 422, 'Please fill in assignee'
 
-    isUser = /user:/.test editTaskParams.assignedTo
-    isGroup = /group:/.test editTaskParams.assignedTo
 
     task = _.extend _.pick(editTaskParams, 'title', 'description', 'assignedTo'),
       dueBy: moment(editTaskParams.dueBy).valueOf()
 
-    console.log 'Updated task: ', task
-    task.assignedTo = task.assignedTo.replace /.*:/, ''
-    if isUser
-      taskId = UserTasks.update oldTask._id, {$set: task}
-    else
-      taskId = GroupTasks.update oldTask._id, {$set: task}
+    populateAssignee editTaskParams, task
+    UserTasks.update oldTask._id, {$set: task}
     oldTask._id

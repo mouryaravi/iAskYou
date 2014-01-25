@@ -1,6 +1,6 @@
-assignedToMeFilter = assignedTo: Meteor.userId()
+assignedToMeFilter = assignedToUser: Meteor.userId()
 createdByMeFilter = createdBy: Meteor.userId()
-notAssignedToMeFilter = {assignedTo: {$nin: [Meteor.userId()]}}
+notAssignedToMeFilter = {assignedToUser: {$nin: [Meteor.userId()]}}
 todayDate = moment(moment().format('YYYY-MM-DD')).valueOf()
 tomorrowDate = moment(moment().add('days', 1).format('YYYY-MM-DD')).valueOf()
 dueTodayFilter =  {dueBy: {'$gte': todayDate, '$lt': tomorrowDate}}
@@ -36,7 +36,16 @@ Template.userTasksList.helpers
 
 
   tasksCreatedByMe: ()->
-    UserTasks.find {$and : [createdByMeFilter, notAssignedToMeFilter, {status: Session.get('othersTasksSelectedCategory')||'Open'} ]}, {sort: {createdAt: -1}}
+    status = Session.get('othersTasksSelectedCategory')||'Open'
+    allFilters = [notAssignedToMeFilter, createdByMeFilter]
+    if status == 'DueToday'
+      status = 'Open'
+      allFilters.push dueTodayFilter
+
+    allFilters.push status: status
+    filter = {$and : allFilters}
+    sortFilter = {sort: {dueBy: 1}}
+    UserTasks.find filter, sortFilter
 
   othersActiveTasksCount: ()->
     UserTasks.find( {$and : [createdByMeFilter, notAssignedToMeFilter, {status: 'Open'}]} ).count()
@@ -49,6 +58,7 @@ Template.userTasksList.helpers
     cat = Session.get('othersTasksSelectedCategory') || 'Open'
     if cat == 'Open' then 'You are still waiting for'
     else if cat == 'Finished' then 'Your peers finished'
+    else if cat == 'DueToday' then 'Tasks Due Today'
 
 
 Template.userTasksList.events
@@ -71,3 +81,7 @@ Template.userTasksList.events
   'click .othersFinishedTasks': (event)->
     event.preventDefault()
     Session.set('othersTasksSelectedCategory', 'Finished')
+
+  'click .othersTasksDueToday': (event)->
+    event.preventDefault()
+    Session.set('othersTasksSelectedCategory', 'DueToday')

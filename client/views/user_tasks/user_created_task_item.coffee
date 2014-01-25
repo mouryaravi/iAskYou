@@ -1,11 +1,11 @@
 Template.userCreatedTaskItem.helpers
   assignedToUser: ()->
-    Meteor.users.findOne this.assignedTo
+    Meteor.users.findOne @assignedToUser
 
 
 Template.userCreatedTaskItem.events
   'click .taskReminder': (event)->
     Reminders.insert
-      taskId: this._id
+      taskId: @_id
       remindedBy: Meteor.userId()
-      userId: this.assignedTo
+      userId: @assignedToUser

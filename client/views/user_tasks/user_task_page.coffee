@@ -1,15 +1,15 @@
 Template.userTaskPage.helpers
   createdByUser: ()->
-    Meteor.users.findOne this.createdBy
+    Meteor.users.findOne @createdBy
 
   assignedToUser: ()->
-    Meteor.users.findOne this.assignedTo
+    Meteor.users.findOne @assignedToUser
 
   dueByText: ()->
-    moment(this.dueBy).fromNow()
+    moment(@dueBy).fromNow()
 
   createdByText: ()->
-    moment(this.createdAt).fromNow()
+    moment(@createdAt).fromNow()
 
   taskCreatedByMe: ()->
-    this.createdBy == Meteor.userId()
+    @createdBy == Meteor.userId()

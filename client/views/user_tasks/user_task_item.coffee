@@ -1,13 +1,13 @@
 Template.userTaskItem.helpers
   isAssignedToMe: ()->
-    this.assignedTo == Meteor.userId() and this.createdBy != Meteor.userId()
+    @assignedToUser == Meteor.userId() and @createdBy != Meteor.userId()
 
   createdByUser: ()->
-    Meteor.users.findOne this.createdBy
+    Meteor.users.findOne @createdBy
 
 
   dueByText: ()->
-    moment(this.dueBy).fromNow()
+    moment(@dueBy).fromNow()
 
 Template.userTaskItem.events
   'click .finished-task': (event)->
