@@ -1,4 +1,25 @@
-assignedToMeFilter = assignedToUser: Meteor.userId()
+myGroupIds = ()->
+  grps = UserGroups.find(
+    {members: Meteor.userId()}
+    {fields: {_id: 1}}
+  ).fetch()
+
+  ids = []
+  _.each grps, (grp)->
+    ids.push grp._id
+  ids
+
+assignedToMeFilter = ()->
+  $or: [
+    {assignedToUser: Meteor.userId()}
+    {assignedToGroup: {$in: myGroupIds()}}
+  ]
+
+assignedToMeFilterWithStatus = (status)->
+  filter = assignedToMeFilter()
+  filter.status = status
+  filter
+
 createdByMeFilter = createdBy: Meteor.userId()
 notAssignedToMeFilter = {assignedToUser: {$nin: [Meteor.userId()]}}
 todayDate = moment(moment().format('YYYY-MM-DD')).valueOf()
@@ -8,24 +29,23 @@ dueTodayFilter =  {dueBy: {'$gte': todayDate, '$lt': tomorrowDate}}
 Template.userTasksList.helpers
   tasksAssignedToMe: ()->
     status = Session.get('myTasksSelectedCategory')||'Open'
-    allFilters = [assignedToMeFilter]
+    allFilters = assignedToMeFilter()
     if status == 'DueToday'
       status = 'Open'
-      allFilters.push dueTodayFilter
+      allFilters.dueBy = dueTodayFilter.dueBy
 
-    allFilters.push status: status
-    filter = {$and : allFilters}
+    allFilters.status = status
     sortFilter = {sort: {dueBy: 1}}
-    UserTasks.find filter, sortFilter
+    UserTasks.find allFilters, sortFilter
 
 
   myActiveTasksCount: ()->
-    UserTasks.find( {$and : [assignedToMeFilter, {status: 'Open'}]} ).count()
+    UserTasks.find(assignedToMeFilterWithStatus('Open')).count()
   myFinishedTasksCount: ()->
-    UserTasks.find( {$and : [assignedToMeFilter, {status: 'Finished'}]} ).count()
+    UserTasks.find( assignedToMeFilterWithStatus('Finished') ).count()
 
   myActiveTodaysTasksCount: ()->
-    UserTasks.find( {$and : [assignedToMeFilter, {status: 'Open'}, dueTodayFilter]} ).count()
+    UserTasks.find( {$and : [assignedToMeFilterWithStatus('Open'), dueTodayFilter]} ).count()
 
 
   myTasksHeading: ()->

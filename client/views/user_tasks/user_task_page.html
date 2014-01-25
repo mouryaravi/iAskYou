@@ -25,7 +25,11 @@
     <div class="form-group">
       <label for="assignedTo" class="col-sm-2 control-label">Assigned To</label>
       <div class="col-sm-10">
+        {{#if assignedToUser}}
         <p class="form-control-static" id="assignedTo">{{assignedToUser.profile.name}}</p>
+        {{else}}
+        <p class="form-control-static" id="assignedTo">Group: {{assignedToGroup.title}}</p>
+        {{/if}}
       </div>
     </div>
   </form>

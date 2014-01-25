@@ -3,7 +3,12 @@ Template.userTaskPage.helpers
     Meteor.users.findOne @createdBy
 
   assignedToUser: ()->
-    Meteor.users.findOne @assignedToUser
+    if @assignedToUser
+      Meteor.users.findOne @assignedToUser
+
+  assignedToGroup: ()->
+    if @assignedToGroup
+      UserGroups.findOne @assignedToGroup
 
   dueByText: ()->
     moment(@dueBy).fromNow()

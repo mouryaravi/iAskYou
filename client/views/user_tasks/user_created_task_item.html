@@ -2,7 +2,11 @@
   <div class="task-content">
     <h4 class="list-group-item-heading"><a href="{{pathFor 'userTaskPage'}}">{{title}}</a></h4>
     <div class="row">
+      {{#if assignedToUser}}
       <div class="col-md-6">To <span class="author">{{assignedToUser.profile.name}}</span></div>
+      {{else}}
+      <div class="col-md-6">To <span class="author">Group: {{assignedToGroup.title}}</span></div>
+      {{/if}}
       <div class="col-md-3"><button class="taskReminder btn btn-sm btn-link">Remind</button></div>
       <div class="col-md-3"><button class="btn btn-sm btn-danger">Delete</button></div>
     </div>
