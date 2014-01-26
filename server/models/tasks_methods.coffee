@@ -1,3 +1,16 @@
+remindTask = (task)->
+  console.log 'I am reminding task ', task.title
+  scheduleReminderForTask(task)
+
+taskCron = new Cron 10000
+
+scheduleReminderForTask = (task)->
+  if task.reminder
+    ts = Math.round((new Date()).getTime()/1000)
+    console.log 'I am in remdiner...', ts, "will be called in", ts+15
+    taskCron.addScheduleJob ts + 15, scheduleReminderForTask(task)
+
+
 populateAssignee = (params, task)->
   assignee =  params.assignedTo.replace /.*:/, ''
   isUser = /user:/.test params.assignedTo
@@ -19,14 +32,18 @@ Meteor.methods
     unless newTaskParams.assignedTo
       throw new Meteor.Error 422, 'Please fill in assignee'
 
-    task = _.extend _.pick(newTaskParams, 'title', 'description', 'assignedTo', 'taskList'),
+    task = _.extend _.pick(newTaskParams, 'title', 'description', 'assignedTo', 'taskList', 'reminder'),
       createdBy: Meteor.userId()
-      dueBy: moment(newTaskParams.dueBy).valueOf()
+      dueBy: if newTaskParams.dueBy then moment(newTaskParams.dueBy).valueOf() else null
 
     populateAssignee newTaskParams, task
 
     console.log 'Got new task params...', task
-    UserTasks.insert task
+    taskId = UserTasks.insert task
+
+    #scheduleReminderForTask task
+
+    taskId
 
 
   finishTask: (finishTaskParams)->
@@ -52,7 +69,7 @@ Meteor.methods
     console.log 'finishing task', task.title, ", by ", user._id
 
     if task.assignedToGroup
-      UserTasks.update {_id: finishTaskParams._id}, {$push: {finishedGroupMembers: user._id}}
+      UserTasks.update {_id: finishTaskParams._id}, {$addToSet: {finishedGroupMembers: user._id}}
     else
       UserTasks.update {_id: finishTaskParams._id}, {$set: {status: 'Finished', finishedBy: user._id}}
 
@@ -77,7 +94,7 @@ Meteor.methods
       throw new Meteor.Error 422, 'Please fill in assignee'
 
 
-    task = _.extend _.pick(editTaskParams, 'title', 'description', 'assignedTo'),
+    task = _.extend _.pick(editTaskParams, 'title', 'description', 'assignedTo', 'reminder'),
       dueBy: moment(editTaskParams.dueBy).valueOf()
 
     populateAssignee editTaskParams, task

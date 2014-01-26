@@ -3,13 +3,21 @@
     <h4 class="list-group-item-heading"><a href="{{pathFor 'userTaskPage'}}">{{title}}</a></h4>
     <p class="list-group-item-text">{{description}}</p>
     <div class="row">
+
       {{#if assignedToUser}}
-      <div class="col-md-4">To <span class="author">{{assignedToUser.profile.name}}</span></div>
+        <div class="col-md-4">To <span class="author">{{assignedToUser.profile.name}}</span></div>
       {{else}}
-      <div class="col-md-4">To <span class="author">Group: {{assignedToGroup.title}}</span></div>
+        <div class="col-md-4">To <span class="author">Group: {{assignedToGroup.title}}</span></div>
       {{/if}}
-      <div class="col-md-2"><small>Due <span class="date">{{dueByText}}</span></small></div>
-      <div class="col-md-2"><button class="taskReminder btn btn-sm btn-link">Remind</button></div>
+
+
+      {{#if isFinished}}
+        <div class="col-md-2"><button>Finished</button></div>
+      {{else}}
+        <div class="col-md-2"><small>Due <span class="date">{{dueByText}}</span></small></div>
+        <div class="col-md-2"><button class="taskReminder btn btn-sm btn-link">Remind</button></div>
+      {{/if}}
+
       {{#if ownThisGroupTask}}
         <div class="col-md-2"><span>{{finishedMembersCount}}/{{totalMembersCount}} Finished</span></div>
       {{/if}}

@@ -4,8 +4,15 @@
     <p class="list-group-item-text">{{description}}</p>
     <div class="row text-center">
       <div class="col-md-4"><small>By <span class="author">{{createdByUser.profile.name}}</span></small></div>
-      <div class="col-md-4"><small>Due <span class="date">{{dueByText}}</span></small></div>
-      <img class="btn-link finished-task" src="/img/Check.png" width="6%"/>
+      {{#if assignedToGroup}}
+        <div class="col-md-2"><small>Group: <span>{{taskGroup.title}}</span></small></div>
+      {{/if}}
+      {{#if isFinished}}
+        <div class="col-md-2"><button>Finished</button></div>
+      {{else}}
+        <div class="col-md-4"><small>Due <span class="date">{{dueByText}}</span></small></div>
+        <img class="btn-link finished-task" src="/img/Check.png" width="6%"/>
+      {{/if}}
     </div>
   </div>
 </template>

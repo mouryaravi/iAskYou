@@ -12,8 +12,11 @@ Template.userCreatedTaskItem.helpers
 
   finishedMembersCount: ()->
     if @assignedToGroup
-      task = UserTasks.findOne assignedToGroup: @assignedToGroup, {fields: {finishedGroupMembers: 1}}
-      if task and task.finishedGroupMembers then task.finishedGroupMembers.length else 0
+      task = UserTasks.findOne @_id, {fields: {finishedGroupMembers: 1}}
+      if task and task.finishedGroupMembers
+        task.finishedGroupMembers.length || 0
+      else
+        0
 
   totalMembersCount: ()->
     if @assignedToGroup
@@ -26,6 +29,9 @@ Template.userCreatedTaskItem.helpers
       console.log 'group - ', grp
       if grp then grp.createdBy == Meteor.userId()
 
+  isFinished: ()->
+    @status == 'Finished'
+
 Template.userCreatedTaskItem.events
   'click .taskReminder': (event)->
     reminders = []
@@ -37,7 +43,9 @@ Template.userCreatedTaskItem.events
     if @assignedToGroup
       taskGroup = UserGroups.findOne(
         {_id: @assignedToGroup}, {fields: {members: 1}})
-      _.each taskGroup.members, (member)->
+      membersToFinish = _.difference taskGroup.members, @finishedGroupMembers
+      console.log 'reminding...', membersToFinish
+      _.each membersToFinish, (member)->
         reminders.push _.extend _.pick(reminderTemplate, 'taskId', 'remindedBy'),
           userId: member
     else if @assignedToUser

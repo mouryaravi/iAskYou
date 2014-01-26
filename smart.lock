@@ -15,7 +15,10 @@
       "moment": {},
       "bootstrap-errors": {},
       "bootstrap-datepicker2": {},
-      "bootstrap-3": {}
+      "bootstrap-3": {},
+      "bootstrap-3-timepicker": {},
+      "cron-tick": {},
+      "winston": {}
     },
     "packages": {
       "iron-router": {
@@ -36,7 +39,7 @@
       "fast-render": {
         "git": "git://github.com/arunoda/meteor-fast-render.git",
         "branch": "master",
-        "commit": "b190f1592401f4084ce54b8f713b134e35a4e0db"
+        "commit": "29a2958fa39423143e545bc2b4f96038e5a78465"
       },
       "iron-router-progress": {
         "git": "https://github.com/Multiply/iron-router-progress.git",
@@ -72,6 +75,21 @@
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v0.3.7",
         "commit": "5dd0d142c870647b910be80bc777b96f0dd45e5e"
+      },
+      "bootstrap-3-timepicker": {
+        "git": "https://github.com/ianserlin/meteor-bootstrap-timepicker.git",
+        "tag": "v0.2.5",
+        "commit": "12dd7c5dd0e67f0f307e7c5aefed74777be808f1"
+      },
+      "cron-tick": {
+        "git": "https://github.com/tmeasday/meteor-cron.git",
+        "tag": "v0.0.4",
+        "commit": "44cff9116af510fe53704fdeeff57c444ceb75ba"
+      },
+      "winston": {
+        "git": "https://github.com/tomrogers3/meteor-winston.git",
+        "tag": "v0.0.3",
+        "commit": "60dc02303ca003ef05254f94fbb9bfd40915d5d3"
       },
       "simple-schema": {
         "git": "https://github.com/aldeed/meteor-simple-schema.git",

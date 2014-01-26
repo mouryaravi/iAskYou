@@ -61,6 +61,12 @@
     max: 200
     optional: true
 
+  reminder:
+    type: String
+    label: 'Reminder Type for the task'
+    max: 200
+    optional: true
+
   createdAt:
     type: Date
     label: 'Created Time'

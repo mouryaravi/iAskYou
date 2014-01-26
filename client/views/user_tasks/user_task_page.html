@@ -28,8 +28,13 @@
         {{#if assignedToUser}}
         <p class="form-control-static" id="assignedTo">{{assignedToUser.profile.name}}</p>
         {{else}}
-        <p class="form-control-static"
-           id="assignedTo"><a href="{{pathFor 'userGroupPage' assignedToGroup}}">Group: {{assignedToGroup.title}}</p>
+          {{#if ownThisGroup}}
+            <p class="form-control-static"
+              id="assignedTo"><a href="{{pathFor 'userGroupPage' assignedToGroup}}">Group: {{assignedToGroup.title}}</a></p>
+          {{else}}
+            <p class="form-control-static"
+               id="assignedTo">Group: {{assignedToGroup.title}}</p>
+          {{/if}}
         {{/if}}
       </div>
     </div>

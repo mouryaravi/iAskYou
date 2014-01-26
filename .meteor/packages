@@ -20,3 +20,6 @@ moment
 bootstrap-errors
 bootstrap-datepicker2
 bootstrap-3
+bootstrap-3-timepicker
+cron-tick
+winston

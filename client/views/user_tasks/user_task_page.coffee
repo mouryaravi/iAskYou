@@ -21,3 +21,8 @@ Template.userTaskPage.helpers
 
   referencedInTaskList: ()->
     TaskLists.findOne @taskList, {fields: {title: 1}}
+
+  ownThisGroup: ()->
+    if @assignedToGroup
+      grp = UserGroups.findOne _id: @assignedToGroup, {fields: {createdBy: 1}}
+      if grp then grp.createdBy == Meteor.userId()
