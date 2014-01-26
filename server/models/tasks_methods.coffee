@@ -1,14 +1,23 @@
-remindTask = (task)->
-  console.log 'I am reminding task ', task.title
-  scheduleReminderForTask(task)
-
-taskCron = new Cron 10000
-
 scheduleReminderForTask = (task)->
-  if task.reminder
-    ts = Math.round((new Date()).getTime()/1000)
-    console.log 'I am in remdiner...', ts, "will be called in", ts+15
-    taskCron.addScheduleJob ts + 15, scheduleReminderForTask(task)
+  if task.reminder and task.reminder != 'None'
+
+    console.log 'reminder for', task
+    cron = new ReminderCron
+      cronTime: '*/5 * * * * *'
+      onComplete: null
+      timeZone: null
+      start: false
+
+    boundFunction = Meteor.bindEnvironment(
+      ()->
+        task = UserTasks.findOne task._id
+        addReminderToTask task, cron
+      (e)->
+        throw e
+    )
+    cron.addCallback boundFunction
+
+    cron.start()
 
 
 populateAssignee = (params, task)->
@@ -41,7 +50,8 @@ Meteor.methods
     console.log 'Got new task params...', task
     taskId = UserTasks.insert task
 
-    #scheduleReminderForTask task
+    task._id = taskId
+    scheduleReminderForTask task
 
     taskId
 
