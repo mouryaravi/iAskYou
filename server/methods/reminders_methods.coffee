@@ -1,20 +1,18 @@
 getEmailHtml = (task)->
   descHtml = '<h3>' + task.title + '</h3>'
   descHtml += '<p>' + task.description + '</p>'
-  descHtml += '<br /><br />'
-  descHtml += "Click <a href='/task/" + task._id + "'>Here</a>"
-
+  descHtml += '<br /><br /> Click '
+  descHtml += "<a href=\"#{process.env.ROOT_URL}/task/#{task._id}\">Here</a>"
+  descHtml
 
 getEmailText = (task)->
   descText = "Title: " + task.title
   descText += '\n\nDescription: ' + task.description
-  descText += '\n\nClick here: /task/' + task._id
+  descText += "\n\nClick here: #{process.env.ROOT_URL}/task/#{task._id}"
 
 
 Meteor.methods
   sendEmailReminderForTask: (task)->
-
-    console.log @
 
     currentLoggedInUser = Meteor.user()
     unless currentLoggedInUser
