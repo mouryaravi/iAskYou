@@ -88,6 +88,17 @@ Meteor.methods
       if task.finishedGroupMembers.length >= grp.members.length
         UserTasks.update {_id: finishTaskParams._id}, {$set: {status: 'Finished'}}
 
+    Reminders.update {
+      taskId: finishTaskParams._id
+      userId: user._id
+    },
+    {
+      $set: {read: true}
+    },
+    {
+      multi: true
+    }
+
 
 
   editUserTask: (editTaskParams)->
