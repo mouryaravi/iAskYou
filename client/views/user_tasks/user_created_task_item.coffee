@@ -35,3 +35,6 @@ Template.userCreatedTaskItem.helpers
 Template.userCreatedTaskItem.events
   'click .taskReminder': (event)->
     addReminderToTask @
+
+  'click .taskEmailReminder': (event)->
+    Meteor.call 'sendEmailReminderForTask', @
